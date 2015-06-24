@@ -39,7 +39,7 @@ public class DateServer extends Thread{
                     else{
                         Thread.sleep(3000);
                     	System.out.println(answer+" Valoarea este prea mare");
-                        new Tester().run(answer+" Valoarea este prea mare", this);
+                        //new Tester().run(answer+" Valoarea este prea mare", this);
                     }
                 } catch (InterruptedException ex) {
                 Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
