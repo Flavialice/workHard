@@ -17,26 +17,16 @@ void setup() {
     for(;;)
       ;
   }
-  
-   if (clientRest.connect(server, 9090)) {
-    //Serial.println("connected");
-
-    clientRest.println("GET http://192.168.2.106/proj/rest/hello/");
-    clientRest.println();
-  } 
-  else {
-    Serial.println("connection failed");
-  }
 }
 
 void loop()
 {
   //Serial.println("connecting...");
-  delay(1000);
+  delay(500);
   
   int valoareIluminare = analogRead(A0);
   Serial.println(valoareIluminare, DEC); 
-  delay(10);
+  delay(20);
   if(valoareIluminare<150)
     digitalWrite(led, HIGH);
   else
@@ -46,7 +36,7 @@ void loop()
   float voltage = sensorValue * (5.0 / 1023.0);
   //Serial.println(voltage);
   if (client.connect(server, 7070)) {
-    client.println(voltage);
+    client.println(valoareIluminare);
     //client.println();
     //char c = client.read();
     //Serial.print(c);
@@ -64,6 +54,6 @@ void loop()
     //for(;;)
       //;
   }
-  delay(1000);
+  delay(500);
 }
 
