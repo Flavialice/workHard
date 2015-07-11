@@ -36,7 +36,11 @@ void loop()
   float voltage = sensorValue * (5.0 / 1023.0);
   //Serial.println(voltage);
   if (client.connect(server, 7070)) {
-    client.println(valoareIluminare);
+    
+    
+    client.print(valoareIluminare);
+    //delay(10);
+    client.print(",temp");
     //client.println();
     //char c = client.read();
     //Serial.print(c);
