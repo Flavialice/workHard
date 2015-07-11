@@ -1,12 +1,14 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
+int led = 7;
 byte mac[] = { 0x98, 0x4F, 0xEE, 0x01, 0xEA, 0x7C };
 IPAddress server(192,168,2,106);
 
 EthernetClient client;
 
 void setup() {
+  pinMode(led, OUTPUT); 
   Serial.begin(9600);
 
   if (Ethernet.begin(mac) == 0) {
@@ -14,10 +16,6 @@ void setup() {
     for(;;)
       ;
   }
-
-  delay(1000);
-  Serial.println("connecting...");
-  delay(1000);
   
   if (client.connect(server, 9090)) {
     Serial.println("connected");
