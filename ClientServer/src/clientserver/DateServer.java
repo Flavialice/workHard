@@ -34,17 +34,13 @@ public class DateServer extends Thread{
                     BufferedReader input =
                             new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     String answer = input.readLine();
-                    float value=Float.parseFloat(answer);
-                    if(value>0.3)
-                    	System.out.println(answer);
-                    else{
-                        //Thread.sleep(3000);
-                    	System.out.println(answer+" Valoarea este prea mare");
-                        //new Tester().run(answer+" Valoarea este prea mare", this);
-                    }
-                //} catch (InterruptedException ex) {
-                //Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Throwable ex) {
+                    String[] s= answer.split(",");
+                    System.out.println(answer);
+                    if(s[1].equals("temp"))
+                        System.out.println("Temperatura");
+                    else
+                        System.out.println("Altceva");
+            } catch (IOException ex) {
                 Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                     socket.close();
