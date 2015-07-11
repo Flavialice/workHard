@@ -1,16 +1,15 @@
-
 #include <SPI.h>
 #include <Ethernet.h>
 
-
+int led = 7;
 byte mac[] = { 0x98, 0x4F, 0xEE, 0x01, 0xEA, 0x7C };
 IPAddress server(192,168,2,106);
 
 EthernetClient client;
-
 EthernetClient clientRest;
 
 void setup() {
+  pinMode(led, OUTPUT); 
   Serial.begin(9600);
 
   if (Ethernet.begin(mac) == 0) {
@@ -18,7 +17,6 @@ void setup() {
     for(;;)
       ;
   }
-  
   
    if (clientRest.connect(server, 9090)) {
     //Serial.println("connected");
@@ -29,14 +27,20 @@ void setup() {
   else {
     Serial.println("connection failed");
   }
-  
-  
 }
 
 void loop()
 {
   //Serial.println("connecting...");
   delay(1000);
+  
+  int valoareIluminare = analogRead(A0);
+  Serial.println(valoareIluminare, DEC); 
+  delay(10);
+  if(valoareIluminare<150)
+    digitalWrite(led, HIGH);
+  else
+    digitalWrite(led, LOW); 
   
   int sensorValue = analogRead(A0);
   float voltage = sensorValue * (5.0 / 1023.0);
@@ -52,15 +56,11 @@ void loop()
     char c = clientRest.read();
     Serial.print(c);
   }
-  
-  
-  
   {
     client.stop();
     //Serial.println();
     //Serial.println("disconnecting.");
     
-
     //for(;;)
       //;
   }

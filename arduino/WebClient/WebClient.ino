@@ -1,7 +1,5 @@
-
 #include <SPI.h>
 #include <Ethernet.h>
-
 
 byte mac[] = { 0x98, 0x4F, 0xEE, 0x01, 0xEA, 0x7C };
 IPAddress server(192,168,2,106);
@@ -10,9 +8,6 @@ EthernetClient client;
 
 void setup() {
   Serial.begin(9600);
-   while (!Serial) {
-    ; 
-  }
 
   if (Ethernet.begin(mac) == 0) {
     Serial.println("Failed to configure Ethernet using DHCP");
