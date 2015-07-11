@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class DateServer extends Thread{
 
+    @Override
     public  void run(){
         ServerSocket listener =null;
         try {
@@ -34,15 +35,15 @@ public class DateServer extends Thread{
                             new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     String answer = input.readLine();
                     float value=Float.parseFloat(answer);
-                    if(value<0.3)
+                    if(value>0.3)
                     	System.out.println(answer);
                     else{
-                        Thread.sleep(3000);
+                        //Thread.sleep(3000);
                     	System.out.println(answer+" Valoarea este prea mare");
                         //new Tester().run(answer+" Valoarea este prea mare", this);
                     }
-                } catch (InterruptedException ex) {
-                Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
+                //} catch (InterruptedException ex) {
+                //Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Throwable ex) {
                 Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
