@@ -7,8 +7,14 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Senzor;
 import org.eclipse.paho.sample.mqttv3app.Sample;
 
 public class DateServer extends Thread{
@@ -24,7 +30,7 @@ public class DateServer extends Thread{
                 try {
                     PrintWriter out =
                         new PrintWriter(socket.getOutputStream(), true);
-                    out.println(new Date().toString());
+                    out.println("peste");
                     
                     BufferedReader input =
                             new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -43,6 +49,28 @@ public class DateServer extends Thread{
                     }
                     else
                         System.out.println("Altceva");
+                    
+                    final ExecutorService service;
+        final Future<Senzor>  task;
+
+        service = Executors.newFixedThreadPool(1);        
+        task    =   (Future<Senzor>) service.submit(new Tester());
+
+        try {
+            final Senzor str;
+
+            // waits the 10 seconds for the Callable.call to finish.
+            str = task.get();
+            System.out.println(str);
+        } catch(final InterruptedException ex) {
+            ex.printStackTrace();
+        } catch(final ExecutionException ex) {
+            ex.printStackTrace();
+        }
+
+        service.shutdownNow();
+    
+
             } catch (IOException ex) {
                 Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
