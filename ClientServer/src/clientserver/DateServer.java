@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.Timer;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -30,7 +31,7 @@ public class DateServer extends Thread{
                 try {
                     PrintWriter out =
                         new PrintWriter(socket.getOutputStream(), true);
-                    out.println("peste");
+                    //out.println("peste");
                     
                     BufferedReader input =
                             new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -49,28 +50,28 @@ public class DateServer extends Thread{
                     }
                     else
                         System.out.println("Altceva");
-                    
+           
                     final ExecutorService service;
-        final Future<Senzor>  task;
+                    final Future<Senzor>  task;
 
-        service = Executors.newFixedThreadPool(1);        
-        task    =   (Future<Senzor>) service.submit(new Tester());
+                    service = Executors.newFixedThreadPool(1);        
+                    task    =   (Future<Senzor>) service.submit(new Tester());
+                    try {
+                        final Senzor str;
+                        // waits the 10 seconds for the Callable.call to finish.
+                        str = task.get();
+                        System.out.println(str);
+                        out.print(str.getTip()+" ");
+                        out.println(str.getValoare());
+                    } catch(final InterruptedException ex) {
+                        ex.printStackTrace();
+                    } catch(final ExecutionException ex) {
+                        ex.printStackTrace();
+                    }
 
-        try {
-            final Senzor str;
+                    service.shutdownNow();
 
-            // waits the 10 seconds for the Callable.call to finish.
-            str = task.get();
-            System.out.println(str);
-        } catch(final InterruptedException ex) {
-            ex.printStackTrace();
-        } catch(final ExecutionException ex) {
-            ex.printStackTrace();
-        }
-
-        service.shutdownNow();
-    
-
+                    
             } catch (IOException ex) {
                 Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
             } finally {

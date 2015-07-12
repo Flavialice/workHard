@@ -79,7 +79,8 @@ public class Tester implements Callable<Senzor>{
   }
 
     @Override
-    public Senzor call(){
+    public Senzor call() throws InterruptedException{
+        Thread.sleep(1000);
         Senzor senzor=null;
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
@@ -103,15 +104,7 @@ public class Tester implements Callable<Senzor>{
                     .type(MediaType.APPLICATION_FORM_URLENCODED)
                     .post(ClientResponse.class, form);
             }
-        }
-        Form form = new Form();
-        form.add("id", last+1);
-        form.add("tip", "temperatura");
-        form.add("valoare", 2);
-        form.add("ultimul_vazut", Calendar.getInstance().getTime());
-        form.add("status", "citit");
-        
+        }        
         return senzor;
-
         }
 } 
