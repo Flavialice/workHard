@@ -41,12 +41,14 @@ void loop()
     delay(10);
     //client.println();
   }
-  for(int i=0;i<5;i++)
-  if (client.available())
-  {
-    char c = client.read();
-    Serial.print(c);
-  }
+  for(int i=0;i<100;i++)
+    if (client.available())
+    {
+      char c = client.read();
+      Serial.print(c);
+        if(i==0&&c=='t')
+          Serial.println("bulangeala");
+    }
      
     //Serial.println();
     //Serial.println("disconnecting.");
