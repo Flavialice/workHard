@@ -27,20 +27,13 @@ void setup() {
 
 void loop()
 {
-  //Serial.println("connecting...");
   delay(1000);
 
   float lumina=Lumina ();
   float um=Umiditate();
   float temp=Temperatura();
   if (client.connect(server, 7070)) {
-    /*int valoareIluminare = analogRead(A1);
-    client.print(valoareIluminare);
-    //delay(10);
-    client.println(",temp");
-    delay(10);
-    //client.println();*/
-    
+
     client.print(lumina);
     client.print(",lumina,");
     client.print(temp);
@@ -61,12 +54,6 @@ void loop()
       if(i==0&&c=='u')
         Serial.println("Modificare procent umiditate");
     }
-     
-    //Serial.println();
-    //Serial.println("disconnecting.");
-    //for(;;)
-      //;
-
   delay(500);
   digitalWrite(ledModificare, LOW);
   client.stop();
@@ -92,10 +79,6 @@ float Umiditate (void)
      analogWrite(grnPin, LOW);      
      analogWrite(bluPin, HIGH); 
    }
- 
-   //Serial.print("Umiditate: ");
-   //Serial.print(umiditate,1);
-   //Serial.println("%");
    delay(1000);
    return(umiditate);
 }
@@ -105,14 +88,6 @@ float Temperatura (void) {
   voltage = analogRead(A0) * 0.004882814;
   degreesC = (voltage - 0.5) * 100.0;
   degreesF = degreesC * (9.0/5.0) + 32.0;
-  
-  /*Serial.print("voltage: ");
-  Serial.print(voltage);
-  Serial.print("  deg C: ");
-  Serial.print(degreesC);
-  Serial.print("  deg F: ");
-  Serial.println(degreesF);*/
-   
   return (degreesC);
 }
 
@@ -122,7 +97,6 @@ float Lumina (void){
     digitalWrite(led, HIGH);
   else
     digitalWrite(led, LOW); 
-  //Serial.println(valoareIluminare, DEC); 
   delay(20);
   return (valoareIluminare);
 }
