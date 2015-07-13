@@ -40,6 +40,7 @@ void loop()
     client.print(",temp,");
     client.print(um);
     client.println(",umiditate");
+    delay(6000);
   }
   for(int i=0;i<100;i++)
     if (client.available())
