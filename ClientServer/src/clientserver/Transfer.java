@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
-import model.Senzor;
 
 public class Transfer extends Thread{
 
@@ -36,21 +35,18 @@ public class Transfer extends Thread{
                     BufferedReader input
                             = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     String answer = input.readLine();
-                    System.out.println(answer);
                     String[] s = answer.split(",");
                     ClientConfig config = new DefaultClientConfig();
-                    Senzor senzor = new Senzor(s[1], s[3],
-                            Float.parseFloat(s[5]), s[7], s[9]);
                     Client client = Client.create(config);
                     WebResource service = client.resource(getBaseURI());
 
                     int last = Integer.parseInt(service.path("rest").path("senzori/numara").accept(MediaType.TEXT_PLAIN).get(String.class));
                     Form form = new Form();
                     form.add("id", last + 1);
-                    form.add("tip", senzor.getTip());
-                    form.add("valoare", senzor.getValoare());
+                    form.add("tip", s[1]);
+                    form.add("valoare", Float.parseFloat(s[3]));
                     form.add("ultimul_vazut", Calendar.getInstance().getTime());
-                    form.add("status", senzor.getStatus());
+                    form.add("status", s[5]);
                     ClientResponse response = service.path("rest").path("senzori")
                             .type(MediaType.APPLICATION_FORM_URLENCODED)
                             .post(ClientResponse.class, form);
