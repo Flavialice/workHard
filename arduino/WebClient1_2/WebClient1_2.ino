@@ -40,11 +40,11 @@ void loop()
     //client.println();*/
     
     client.print(lumina);
-    client.print(",lumina\n");
+    client.print(",lumina,");
     client.print(temp);
-    client.print(",temp\n");
+    client.print(",temp,");
     client.print(um);
-    client.println(",umiditate\n");
+    client.println(",umiditate");
   }
   for(int i=0;i<100;i++)
     if (client.available())
