@@ -2,6 +2,7 @@
 #include <Ethernet.h>
 
 int led = 7;
+int ledModificare = 8;
 int redPin = 9;
 int grnPin = 11;
 int bluPin = 10;
@@ -14,6 +15,7 @@ EthernetClient client;
 
 void setup() {
   pinMode(led, OUTPUT); 
+  pinMode(ledModificare, OUTPUT); 
   Serial.begin(9600);
   
   if (Ethernet.begin(mac) == 0) {
@@ -50,9 +52,14 @@ void loop()
     if (client.available())
     {
       char c = client.read();
-      Serial.print(c);
-        if(i==0&&c=='t')
-          Serial.println("bulangeala");
+      if(i==0&&c=='t'){
+        Serial.println("Modificare temperatura");
+        digitalWrite(ledModificare, HIGH);
+      }
+      if(i==0&&c=='l')
+        Serial.println("Modificare intensitate lumina");
+      if(i==0&&c=='u')
+        Serial.println("Modificare procent umiditate");
     }
      
     //Serial.println();
@@ -61,6 +68,7 @@ void loop()
       //;
 
   delay(500);
+  digitalWrite(ledModificare, LOW);
   client.stop();
 }
 

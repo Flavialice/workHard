@@ -28,14 +28,10 @@ public class Tester implements Callable<Senzor>{
         Client client = Client.create(config);
         WebResource service = client.resource(getBaseURI());
 
-        System.out.println(service.path("rest").path("senzori/numara")
-            .accept(MediaType.TEXT_PLAIN).get(String.class));
         int last=Integer.parseInt(service.path("rest").path("senzori/numara").accept(MediaType.TEXT_PLAIN).get(String.class));
         for(int i=1;i<=last;i++){
             senzor=service.path("rest").path("senzori/"+i).accept(MediaType.APPLICATION_XML).get(Senzor.class);
-            if(senzor.getStatus().equals("now")){
-                System.out.println(service.path("rest").path("senzori/"+i)
-                    .accept(MediaType.APPLICATION_XML).get(Senzor.class).toString());
+            if(senzor.getStatus().equals("necitit")){
                 Form form = new Form();
                 form.add("id", i);
                 form.add("tip", senzor.getTip());
@@ -45,8 +41,9 @@ public class Tester implements Callable<Senzor>{
                 ClientResponse response = service.path("rest").path("senzori")
                     .type(MediaType.APPLICATION_FORM_URLENCODED)
                     .post(ClientResponse.class, form);
+                return senzor;
             }
         }        
-        return senzor;
+        return null;
         }
 } 

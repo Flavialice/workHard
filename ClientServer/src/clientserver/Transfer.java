@@ -25,7 +25,7 @@ public class Transfer extends Thread{
     public  void run() {
         ServerSocket listener =null;
         try {
-        listener = new ServerSocket(7070);
+        listener = new ServerSocket(6060);
             while (true) {
                 Socket socket = listener.accept();
                 try {

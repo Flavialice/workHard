@@ -36,9 +36,8 @@ public class DateServer extends Thread{
                             new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     String answer = input.readLine();
                     String[] s= answer.split(",");
-                    System.out.println(answer);
                     if(s[3].equals("temp")){
-                        System.out.println("Temperatura");
+                     
                         arguments[0]="-a";
                         arguments[1]="publish";
                         arguments[2]="-t";
@@ -46,9 +45,10 @@ public class DateServer extends Thread{
                         arguments[4]="-m";
                         arguments[5]="Tempratura are valoarea de "+s[2]+" grade Celsius";
                         Sample.main(arguments);
+                        System.out.println("\n");
                     }
                     if(s[1].equals("lumina")){
-                        System.out.println("Lumina");
+                        
                         arguments[0]="-a";
                         arguments[1]="publish";
                         arguments[2]="-t";
@@ -56,9 +56,10 @@ public class DateServer extends Thread{
                         arguments[4]="-m";
                         arguments[5]="Intensitatea luminii are valoarea de "+s[0];
                         Sample.main(arguments);
+                        System.out.println("\n");
                     }
                     if(s[5].equals("umiditate")){
-                        System.out.println("Umiditate");
+                        
                         arguments[0]="-a";
                         arguments[1]="publish";
                         arguments[2]="-t";
@@ -66,18 +67,19 @@ public class DateServer extends Thread{
                         arguments[4]="-m";
                         arguments[5]="Umiditate: "+s[4]+" %";
                         Sample.main(arguments);
+                        System.out.println("\n");
                     }
                     final ExecutorService service;
                     final Future<Senzor>  task;
-
                     service = Executors.newFixedThreadPool(1);        
                     task    =   (Future<Senzor>) service.submit(new Tester());
                     try {
                         final Senzor str;
                         str = task.get();
-                        System.out.println(str);
+                        if(str!=null){
+                        System.out.println(str+"\n");
                         out.print(str.getTip()+" ");
-                        out.println(str.getValoare());
+                        out.println(str.getValoare());}
                     } catch(final InterruptedException ex) {
                         ex.printStackTrace();
                     } catch(final ExecutionException ex) {
