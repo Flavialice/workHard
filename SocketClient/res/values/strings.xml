@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SocketClient</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+	<string name="id">ID</string>
+	<string name="tip">Tip</string>
+	<string name="valoare">Valoare</string>
+	<string name="ultimul_vazut">Ultimul vazut</string>
+	<string name="status">Status</string>
+	<string name="submit">Submit</string>
+	<string name="clear">Clear</string>
+</resources>
