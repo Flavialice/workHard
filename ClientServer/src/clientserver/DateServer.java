@@ -31,8 +31,7 @@ public class DateServer extends Thread{
                 try {
                     PrintWriter out =
                         new PrintWriter(socket.getOutputStream(), true);
-                    //out.println("peste");
-                    
+
                     BufferedReader input =
                             new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     String answer = input.readLine();
@@ -75,7 +74,6 @@ public class DateServer extends Thread{
                     task    =   (Future<Senzor>) service.submit(new Tester());
                     try {
                         final Senzor str;
-                        // waits the 10 seconds for the Callable.call to finish.
                         str = task.get();
                         System.out.println(str);
                         out.print(str.getTip()+" ");
@@ -85,10 +83,8 @@ public class DateServer extends Thread{
                     } catch(final ExecutionException ex) {
                         ex.printStackTrace();
                     }
-
                     service.shutdownNow();
 
-                    
             } catch (IOException ex) {
                 Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
@@ -100,5 +96,4 @@ public class DateServer extends Thread{
             Logger.getLogger(DateServer.class.getName()).log(Level.SEVERE, null, ex);
         }   
     }
-
 }
