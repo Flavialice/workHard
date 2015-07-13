@@ -27,20 +27,10 @@ void loop()
 {
   //Serial.println("connecting...");
   delay(1000);
-  
-  int valoareIluminare = analogRead(A1);
-  //Serial.println(valoareIluminare, DEC); 
-  delay(20);
-  if(valoareIluminare<150)
-    digitalWrite(led, HIGH);
-  else
-    digitalWrite(led, LOW); 
+
   float lumina=Lumina ();
-     float um=Umiditate();
-   float temp=Temperatura();
-  //int sensorValue = analogRead(A0);
-  //float voltage = sensorValue * (5.0 / 1023.0);
-  //Serial.println(voltage);
+  float um=Umiditate();
+  float temp=Temperatura();
   if (client.connect(server, 7070)) {
     /*int valoareIluminare = analogRead(A1);
     client.print(valoareIluminare);
@@ -50,8 +40,11 @@ void loop()
     //client.println();*/
     
     client.print(lumina);
-    client.println(",temp");
-
+    client.print(",lumina\n");
+    client.print(temp);
+    client.print(",temp\n");
+    client.print(um);
+    client.println(",umiditate\n");
   }
   for(int i=0;i<100;i++)
     if (client.available())
