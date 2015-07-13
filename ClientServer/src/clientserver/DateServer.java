@@ -38,7 +38,7 @@ public class DateServer extends Thread{
                     String answer = input.readLine();
                     String[] s= answer.split(",");
                     System.out.println(answer);
-                    if(s[1].equals("temp")){
+                    if(s[3].equals("temp")){
                         System.out.println("Temperatura");
                         arguments[0]="-a";
                         arguments[1]="publish";
@@ -46,11 +46,28 @@ public class DateServer extends Thread{
                         arguments[3]="temp";
                         arguments[4]="-m";
                         arguments[5]="Tempratura are valoarea de "+s[0]+" grade Celsius";
-                        Sample.main(arguments);
+                        //Sample.main(arguments);
                     }
-                    else
-                        System.out.println("Altceva");
-           
+                    if(s[1].equals("lumina")){
+                        System.out.println("Lumina");
+                        arguments[0]="-a";
+                        arguments[1]="publish";
+                        arguments[2]="-t";
+                        arguments[3]="lumina";
+                        arguments[4]="-m";
+                        arguments[5]="Intensitatea luminii are valoarea de "+s[0];
+                        //Sample.main(arguments);
+                    }
+                    if(s[5].equals("umiditate")){
+                        System.out.println("Umiditate");
+                        arguments[0]="-a";
+                        arguments[1]="publish";
+                        arguments[2]="-t";
+                        arguments[3]="umiditate";
+                        arguments[4]="-m";
+                        arguments[5]="Umiditate: "+s[0]+" %";
+                        //Sample.main(arguments);
+                    }
                     final ExecutorService service;
                     final Future<Senzor>  task;
 
