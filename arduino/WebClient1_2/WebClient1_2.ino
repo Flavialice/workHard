@@ -2,6 +2,12 @@
 #include <Ethernet.h>
 
 int led = 7;
+int redPin = 9;
+int grnPin = 11;
+int bluPin = 10;
+float Temperatura(void);
+float Lumina (void);
+float Umiditate(void);
 byte mac[] = { 0x98, 0x4F, 0xEE, 0x01, 0xEA, 0x7C };
 IPAddress server(192,168,2,106);
 EthernetClient client;
@@ -29,17 +35,23 @@ void loop()
     digitalWrite(led, HIGH);
   else
     digitalWrite(led, LOW); 
-  
+  float lumina=Lumina ();
+     float um=Umiditate();
+   float temp=Temperatura();
   //int sensorValue = analogRead(A0);
   //float voltage = sensorValue * (5.0 / 1023.0);
   //Serial.println(voltage);
   if (client.connect(server, 7070)) {
-    int valoareIluminare = analogRead(A1);
+    /*int valoareIluminare = analogRead(A1);
     client.print(valoareIluminare);
     //delay(10);
     client.println(",temp");
     delay(10);
-    //client.println();
+    //client.println();*/
+    
+    client.print(lumina);
+    client.println(",temp");
+
   }
   for(int i=0;i<100;i++)
     if (client.available())
@@ -59,3 +71,57 @@ void loop()
   client.stop();
 }
 
+float Umiditate (void)
+{
+   float umiditate=analogRead(A2);
+   umiditate=((umiditate/1000)*33)+0.66;
+     
+   if(umiditate<21){
+      analogWrite(redPin, HIGH);  
+      analogWrite(grnPin, LOW);      
+      analogWrite(bluPin, LOW);
+    }
+   if(umiditate>=22){
+     analogWrite(redPin, LOW);  
+     analogWrite(grnPin, HIGH);      
+     analogWrite(bluPin, LOW);
+   }      
+   if(umiditate>=21&&umiditate<22){
+     analogWrite(redPin, LOW);  
+     analogWrite(grnPin, LOW);      
+     analogWrite(bluPin, HIGH); 
+   }
+ 
+   //Serial.print("Umiditate: ");
+   //Serial.print(umiditate,1);
+   //Serial.println("%");
+   delay(1000);
+   return(umiditate);
+}
+
+float Temperatura (void) {
+  float voltage, degreesC, degreesF;
+  voltage = analogRead(A0) * 0.004882814;
+  degreesC = (voltage - 0.5) * 100.0;
+  degreesF = degreesC * (9.0/5.0) + 32.0;
+  
+  /*Serial.print("voltage: ");
+  Serial.print(voltage);
+  Serial.print("  deg C: ");
+  Serial.print(degreesC);
+  Serial.print("  deg F: ");
+  Serial.println(degreesF);*/
+   
+  return (degreesC);
+}
+
+float Lumina (void){
+  int valoareIluminare = analogRead(A1);
+  if(valoareIluminare<150)
+    digitalWrite(led, HIGH);
+  else
+    digitalWrite(led, LOW); 
+  //Serial.println(valoareIluminare, DEC); 
+  delay(20);
+  return (valoareIluminare);
+}
